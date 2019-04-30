@@ -1,0 +1,8 @@
+# model files
+**.pt
+**.pth
+
+# image files
+**/dogImages
+**/lfw
+**/images
