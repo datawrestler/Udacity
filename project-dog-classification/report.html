@@ -14630,7 +14630,8 @@ Test Accuracy: 37% (312/836)
 <div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">PrintLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># # https://discuss.pytorch.org/t/how-do-i-print-output-of-each-layer-in-sequential/5773/3</span>
+<span class="k">class</span> <span class="nc">PrintLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PrintLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     
@@ -14934,6 +14935,8 @@ The customized classification layers that I added in are as follows:</p>
   <span class="p">(</span><span class="mi">30</span><span class="p">):</span> <span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dilation</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ceil_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
+<p>Why this architecutre is particularly well suited for this particular problem is the base model was trained on images that contained dogs. The transfer learning process enables me to capture that learned information in the base part of the model, freeze those weights, and now only have to learn the classificaiton portion of the model, which is classification on the dog images. This makes the life of the model easier as it's learned quite a bit about images and characteristics of images through the VGG16 training procedure.</p>
+<p>Earlier attempts at building the model from scratch were a hurculean task in comparison to the transfer learning approach. The earlier model has to learn what objects in the world are, how to extract them from images, and pick out very fine grained details about specific types of dogs. That is too much to ask for with only a couple thousand images. While the model that was trained earlier was fairly good ~37% accuracy on 133 class problem, it was nowhere near the accuracy of the transfer learning model because the scope of the learning problem was reduced so dramatically.</p>
 
 </div>
 </div>
