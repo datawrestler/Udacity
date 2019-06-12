@@ -13432,6 +13432,7 @@ Max:  tensor(0.9922)
 <span class="k">def</span> <span class="nf">conv</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
         <span class="n">batch_norm</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;create conv layer w/optional batch norm&quot;&quot;&quot;</span>
+    <span class="c1"># source: https://github.com/udacity/deephttps://github.com/udacity/deep-learning-v2-pytorch/blob/master/dcgan-svhn/DCGAN_Solution.ipynb-learning-v2-pytorch/blob/master/dcgan-svhn/DCGAN_Solution.ipynb</span>
     <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">conv_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> 
                           <span class="n">kernel_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -13464,6 +13465,7 @@ Max:  tensor(0.9922)
 <span class="sd">        Initialize the Discriminator Module</span>
 <span class="sd">        :param conv_dim: The depth of the first convolutional layer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># inspiration source: https://github.com/udacity/deep-learning-v2-pytorch/blob/master/dcgan-svhn/DCGAN_Solution.ipynb</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Discriminator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="c1"># complete init function</span>
@@ -13551,7 +13553,7 @@ Max:  tensor(0.9922)
           <span class="n">batch_norm</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     
     <span class="sd">&quot;&quot;&quot;creates a transposed convultional layer with optional batch norm&quot;&quot;&quot;</span>
-    
+    <span class="c1"># credits: https://github.com/udacity/deep-learning-v2-pytorch/blob/master/dcgan-svhn/DCGAN_Solution.ipynb</span>
     <span class="c1"># create a sequence of transpose + optional batch norm layers</span>
     <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">transpose_conv_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> 
@@ -13585,6 +13587,7 @@ Max:  tensor(0.9922)
 <span class="sd">        :param z_size: The length of the input latent vector, z</span>
 <span class="sd">        :param conv_dim: The depth of the inputs to the *last* transpose convolutional layer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># credits https://github.com/udacity/deep-learning-v2-pytorch/blob/master/dcgan-svhn/DCGAN_Solution.ipynb</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Generator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="c1"># complete init function</span>
@@ -13680,7 +13683,7 @@ Max:  tensor(0.9922)
     <span class="c1"># classname will be something like:</span>
     <span class="c1"># `Conv`, `BatchNorm2d`, `Linear`, etc.</span>
     <span class="n">classname</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-    
+    <span class="c1"># credit: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/models/networks.py</span>
     <span class="c1"># TODO: Apply initial weights to convolutional and linear layers</span>
     <span class="n">norm_layers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Conv&#39;</span><span class="p">,</span> <span class="s1">&#39;BatchNorm2d&#39;</span><span class="p">,</span> <span class="s1">&#39;Linear&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">classname</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">ly</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ly</span> <span class="ow">in</span> <span class="n">norm_layers</span><span class="p">]):</span>
@@ -13917,10 +13920,12 @@ Generator(
 
 <span class="k">def</span> <span class="nf">real_mse_loss</span><span class="p">(</span><span class="n">D_out</span><span class="p">):</span>
     <span class="c1"># how close is the produced output from being &quot;real&quot;?</span>
+    <span class="c1"># credits: https://github.com/udacity/deep-learning-v2-pytorch/blob/master/cycle-gan/CycleGAN_Solution.ipynb</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">D_out</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">fake_mse_loss</span><span class="p">(</span><span class="n">D_out</span><span class="p">):</span>
     <span class="c1"># how close is the produced output from being &quot;false&quot;?</span>
+    <span class="c1"># credits: https://github.com/udacity/deep-learning-v2-pytorch/blob/master/cycle-gan/CycleGAN_Solution.ipynb</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">D_out</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
@@ -14025,6 +14030,8 @@ Generator(
             <span class="c1">#         YOUR CODE HERE: TRAIN THE NETWORKS</span>
             <span class="c1"># ===============================================</span>
             <span class="c1"># 1. Train the discriminator on real and fake images</span>
+            <span class="c1"># credits https://github.com/udacity/deep-learning-v2-pytorch/blob/master/dcgan-svhn/DCGAN_Solution.ipynb</span>
+
 
             <span class="n">d_optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
             
